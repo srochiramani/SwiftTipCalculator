@@ -18,20 +18,21 @@ class ViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        // Do any additional setup after loading the view, typically from a nib.
+        
+        // default label text's
         tipLabel.text = "$0.00"
         totalLabel.text = "$0.00"
+        
     }
-
-    override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
+    
+    override func viewWillAppear(animated: Bool) {
+        super.viewWillAppear(animated)
+        // select user's default preferred tip setting
+        tipControl.selectedSegmentIndex = NSUserDefaults.standardUserDefaults().integerForKey("tip_percentage_value")
+        onBillAmountChanged(animated)
     }
-
 
     @IBAction func onBillAmountChanged(sender: AnyObject) {
-        println("Bill Amount Changed to " + billField.text);
-        
         var tipPercentages = [0.18, 0.20, 0.30];
         var tipPercentage = tipPercentages[tipControl.selectedSegmentIndex]
         
@@ -49,6 +50,6 @@ class ViewController: UIViewController {
     @IBAction func onTipChanged(sender: AnyObject) {
         onBillAmountChanged(sender)
     }
-    
+
 }
 
