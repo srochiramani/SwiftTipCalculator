@@ -108,7 +108,7 @@
         <!--Settings-->
         <scene sceneID="NE2-Ej-9VD">
             <objects>
-                <viewController id="Ldt-Zv-gK0" customClass="SettingsViewController" customModule="Tips" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController modalTransitionStyle="partialCurl" id="Ldt-Zv-gK0" customClass="SettingsViewController" customModule="Tips" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="pNw-N5-Sgd" customClass="Sett" customModule="Tips">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>

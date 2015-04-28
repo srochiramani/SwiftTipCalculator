@@ -23,6 +23,9 @@ class ViewController: UIViewController {
         tipLabel.text = "$0.00"
         totalLabel.text = "$0.00"
         
+        // auto-focus on total bill amount
+        billField.becomeFirstResponder()
+        
     }
     
     override func viewWillAppear(animated: Bool) {
@@ -30,6 +33,7 @@ class ViewController: UIViewController {
         // select user's default preferred tip setting
         tipControl.selectedSegmentIndex = NSUserDefaults.standardUserDefaults().integerForKey("tip_percentage_value")
         onBillAmountChanged(animated)
+
     }
 
     @IBAction func onBillAmountChanged(sender: AnyObject) {
