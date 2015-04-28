@@ -23,9 +23,21 @@ class ViewController: UIViewController {
         tipLabel.text = "$0.00"
         totalLabel.text = "$0.00"
         
+        let userPrefs = NSUserDefaults.standardUserDefaults()
+        var now = NSDate()
+        var last: AnyObject? = userPrefs.objectForKey("last_exit_time")
+        if last != nil {
+            let cal = NSCalendar.currentCalendar()
+            let unit:NSCalendarUnit = .CalendarUnitMinute
+            var lastDate : NSDate = last! as NSDate
+            let components = cal.components(unit, fromDate: lastDate, toDate: now, options: nil)
+            if components.minute <= 10 {
+                billField.text = userPrefs.stringForKey("bill_amount")
+            }
+        }
+        
         // auto-focus on total bill amount
         billField.becomeFirstResponder()
-        
     }
     
     override func viewWillAppear(animated: Bool) {
@@ -33,7 +45,13 @@ class ViewController: UIViewController {
         // select user's default preferred tip setting
         tipControl.selectedSegmentIndex = NSUserDefaults.standardUserDefaults().integerForKey("tip_percentage_value")
         onBillAmountChanged(animated)
-
+    }
+    
+    override func viewDidDisappear(animated: Bool) {
+        super.viewDidDisappear(animated)
+        
+        NSUserDefaults.standardUserDefaults().setObject(NSDate(), forKey: "last_exit_time")
+        NSUserDefaults.standardUserDefaults().synchronize()
     }
 
     @IBAction func onBillAmountChanged(sender: AnyObject) {
@@ -45,6 +63,10 @@ class ViewController: UIViewController {
         var total = billAmount + tip
         tipLabel.text = String(format: "$%.2f", tip)
         totalLabel.text = String(format: "$%.2f", total)
+        
+        // store the bill amount in shared prefs
+        NSUserDefaults.standardUserDefaults().setDouble(billAmount, forKey: "bill_amount")
+        
     }
     
     @IBAction func onTap(sender: AnyObject) {
